@@ -1,0 +1,53 @@
+const asValue = (cf, cb) =>
+	data =>
+		cf(data.target.value)
+
+const toNumber = (cf, cb) =>
+	data =>
+		cf(Number(data))
+
+const filterEven = (cf, cb) =>
+	data =>
+		~data&1 && cf(data)
+
+const double = (cf, cb) =>
+	data =>
+		cf(data*2)
+
+const throttle = (cf, cb) => {
+	let af, latestData;
+	return data => {
+		latestData = data;
+		if (!af) {
+			af = requestAnimationFrame(() => {
+				cf(latestData);
+				af = null;
+			});
+		}
+	};
+};
+
+const debounce = (ms) =>
+	(cf, cb) => {
+		let timeout;
+		return data => {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => cf(data), ms);
+		};
+	}
+;
+
+const sink = (target, cb) =>
+	data =>
+		target.innerHTML = data
+
+const pipeline = compose(
+	buttonClick,
+	asValue,
+	toNumber,
+	filterEven,
+	double,
+	throttle,
+	sink,
+);
+
