@@ -1,4 +1,4 @@
-export { compose } from './compose';
+export { flow, flow as Callforward } from './flow';
 
 // Logging, tracing, debugging
 export { debug } from './lib/debug';

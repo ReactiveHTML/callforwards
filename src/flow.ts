@@ -1,12 +1,16 @@
 import type { SinkFn, Step } from './types';
 
-export const compose = (...fns: Step<unknown, unknown>[]) => {
+export const flow = (...fns: Step<unknown, unknown>[]) => {
 	// TODO: define how callbacks would work?
-	//   const cb = () => {
-	//     console.log('circuit broken');
-	//   }
+	const cb = () => {
+	  console.log('circuit broken');
+	}
 
 	let nextFn: SinkFn<any> | null;
+
+
+	const next = (data: any) => nextFn?.(data);
+
 	const subscribe = <T>(sink: SinkFn<T>) => {
 		nextFn = fns.reduceRight((a, b) => b(a, cb), sink);
 		return {
@@ -14,8 +18,11 @@ export const compose = (...fns: Step<unknown, unknown>[]) => {
 		};
 	};
 
+	/**
+	 * Export an Observable interface for interoperability
+	 */
 	return {
-		next: (data: any) => nextFn?.(data),
-			subscribe,
+		next,
+		subscribe,
 	};
 };
