@@ -1,3 +1,5 @@
+export { compose } from './compose';
+
 // Logging, tracing, debugging
 export { debug } from './lib/debug';
 export { log } from './lib/log';
