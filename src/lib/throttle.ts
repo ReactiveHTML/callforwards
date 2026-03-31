@@ -1,7 +1,7 @@
-import type { Operator, Step } from '../types';
+import type { Callforward, Operator, Step } from '../types';
 
 export const throttle = <T>(): Step<T, T> =>
-	(cf, cb) => {
+	(cf: Callforward) => {
 		let af: number, latestData: any;
 		return data => {
 			latestData = data;

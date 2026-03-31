@@ -1,11 +1,11 @@
-import type { Operator, Step } from '../types';
+import type { Callforward, Operator, Step } from '../types';
 
-export const debounce = <T>(ms: number): Step<T, T> =>
-	(cf, cb) => {
-		let timeout: NodeJS.Timeout;
-		return data => {
-			clearTimeout(timeout);
-			timeout = setTimeout(() => cf(data), ms);
+export const debounce = <Operator<T>>(ms: number) =>
+	(cf: Callforward) => {
+		let timeout: ReturnType<typeof setTimeout>;
+		return (data: T) => {
+			timeout && clearTimeout(timeout);
+			timeout = setTimeout(cf.bind(null, data), ms);
 		};
 	}
 ;

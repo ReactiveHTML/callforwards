@@ -8,3 +8,7 @@ export { log } from './lib/log';
 export { debounce } from './lib/debounce';
 export { throttle } from './lib/throttle';
 
+// 
+export { merge } from './lib/merge';
+export { mergeWith } from './lib/merge-with';
+

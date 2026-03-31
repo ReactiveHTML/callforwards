@@ -1,7 +1,7 @@
-import type { Operator, Step } from '../types';
+import type { Callforward, Operator, Step } from '../types';
 
 export const debug = <T>(): Step<T, T> =>
-	(cf, cb) =>
+	(cf: Callforward) =>
 		data => {
 			debugger;
 			cf(data);
